@@ -3,17 +3,17 @@ const token = require("./secret")
 const TOKEN = process.env.TELEGRAM_TOKEN || token
 
 const options = {
-  webHook: {
+  /* webHook: {
     port: process.env.PORT    
-  },
-  //polling: true
+  }, */
+  polling: true
 }
 
 const url = process.env.APP_URL || 'https://fierce-plains-89529.herokuapp.com:443'
 
 const bot = new TelegramBot(TOKEN, options)
 
-bot.setWebHook(`${url}/bot${TOKEN}`)
+//bot.setWebHook(`${url}/bot${TOKEN}`)
 
 bot.on("message", msg => {
   bot.sendMessage(msg.chat.id, 'I am alive on Heroku!')
