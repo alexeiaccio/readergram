@@ -7,8 +7,9 @@
     "node": "6.2.0"
   },
   "scripts": {
-    "start": "babel-node index.js --presets es2015,stage-2",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node index.js",
+    "build": "babel index.js -d dist && node dist/index.js"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
