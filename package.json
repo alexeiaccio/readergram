@@ -4,6 +4,7 @@
   "description": "test telegram bot",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node index.js --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/alexeiaccio/readergram/issues"
   },
-  "homepage": "https://github.com/alexeiaccio/readergram#readme"
+  "homepage": "https://github.com/alexeiaccio/readergram#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.29.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
 }
