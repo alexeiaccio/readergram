@@ -1,6 +1,18 @@
 const TelegramBot = require("node-telegram-bot-api")
 const express = require('express')
 const bodyParser = require('body-parser')
+//const getText = require('./functions')
+const fs = require('fs')
+const path = require('path')
+
+const TEXT = fs.readFileSync(path.resolve(__dirname + '/assets/text.js'))
+
+const getText = function(x) {
+  return 'text'
+  console.log(x)
+}
+
+console.log(process.env.APP_URL)
 
 const PORT = process.env.PORT || 5000
 const TOKEN = process.env.TELEGRAM_TOKEN
@@ -42,5 +54,15 @@ bot.on("message", msg => {
       .includes(bye)
   ) {
     bot.sendMessage(msg.chat.id, "Hope to see you around again , Bye")
+  }
+
+  let text = "text";
+  if (
+    msg.text
+      .toString()
+      .toLowerCase()
+      .includes(text)
+  ) {
+    bot.sendMessage(msg.chat.id, getText(TEXT))
   }
 })
