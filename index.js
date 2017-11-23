@@ -8,9 +8,7 @@ const path = require('path')
 const TEXT = fs.readFileSync(path.resolve(__dirname + '/assets/text.js'))
 
 const getText = function(x) {
-  return x.text
-          .toString()
-          .slice(0, 1000)
+  return x.toString().slice(0, 1000)
 }
 
 const PORT = process.env.PORT || 5000
