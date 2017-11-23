@@ -44,5 +44,6 @@ const PORT = process.env.PORT || 5000
 
 express()
   .set('port', PORT)
-  .get('/', (req, res) => res.send('Hello World!'))  
+  .get('/', (req, res) => res.send('Hello World!'))
+  .get('/token', (req, res) => res.send(TOKEN))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
