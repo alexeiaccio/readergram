@@ -1,6 +1,6 @@
 const TelegramBot = require("node-telegram-bot-api")
-const token = require("./secret")
-const TOKEN = process.env.TELEGRAM_TOKEN || token
+//const token = require("./secret")
+const TOKEN = process.env.TELEGRAM_TOKEN //|| token
 
 const options = {
   /* webHook: {
