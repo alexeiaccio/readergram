@@ -1,11 +1,5 @@
-const fs = require('fs')
-const path = require('path')
-
-const resource = fs.readFileSync(path.resolve(__dirname + '/assets/text.js'))
-
-const getText = function(resource) {
-  return 'text'
-  console.log(resource)
+const getText = function(x) {
+  return x.toString().slice(0, 1000)
 }
 
-module.exports = getText()
+module.exports = getText
