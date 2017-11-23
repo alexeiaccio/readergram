@@ -8,10 +8,10 @@ const path = require('path')
 const TEXT = fs.readFileSync(path.resolve(__dirname + '/assets/text.js'))
 
 const getText = function(x) {
-  return x.toString()
+  return x.text
+          .toString()
+          .slice(0, 1000)
 }
-
-console.log(process.env.APP_URL)
 
 const PORT = process.env.PORT || 5000
 const TOKEN = process.env.TELEGRAM_TOKEN
