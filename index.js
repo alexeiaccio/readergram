@@ -1,19 +1,25 @@
 const TelegramBot = require("node-telegram-bot-api")
-//const token = require("./secret")
-const TOKEN = process.env.TELEGRAM_TOKEN //|| token
+const express = require('express')
+const bodyParser = require('body-parser')
 
-const options = {
-  /* webHook: {
-    port: process.env.PORT    
-  }, */
-  polling: true
-}
-
+const PORT = process.env.PORT || 5000
+const TOKEN = process.env.TELEGRAM_TOKEN
 const url = process.env.APP_URL || 'https://fierce-plains-89529.herokuapp.com:443'
 
-const bot = new TelegramBot(TOKEN, options)
+const bot = new TelegramBot(TOKEN)
 
-//bot.setWebHook(`${url}/bot${TOKEN}`)
+bot.setWebHook(`${url}/bot${TOKEN}`)
+
+express()
+  .set('port', PORT)
+  .use(bodyParser.json())
+  .post(`/bot${TOKEN}`, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+  })
+  .get('/', (req, res) => res.send('Hello World!'))
+  .get('/token', (req, res) => res.send(TOKEN))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 bot.on("message", msg => {
   bot.sendMessage(msg.chat.id, 'I am alive on Heroku!')
@@ -38,12 +44,3 @@ bot.on("message", msg => {
     bot.sendMessage(msg.chat.id, "Hope to see you around again , Bye")
   }
 })
-
-const express = require('express')
-const PORT = process.env.PORT || 5000
-
-express()
-  .set('port', PORT)
-  .get('/', (req, res) => res.send('Hello World!'))
-  .get('/token', (req, res) => res.send(TOKEN))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
