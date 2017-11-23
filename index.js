@@ -8,8 +8,7 @@ const path = require('path')
 const TEXT = fs.readFileSync(path.resolve(__dirname + '/assets/text.js'))
 
 const getText = function(x) {
-  return 'text'
-  console.log(x)
+  return x.toString()
 }
 
 console.log(process.env.APP_URL)
