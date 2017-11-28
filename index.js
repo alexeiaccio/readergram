@@ -77,10 +77,16 @@ bot.onText(/\/book/, function(msg) {
 
 let longText = '';
 
+const opts = {
+  parse_mode: 'markdown',
+  disable_web_page_preview: true
+}
+
 bot.on("message", msg => {
   let longread = "@longread" 
   let text = msg.text.toString() 
   let textPages = getMaxPage(text)
+  let extOpts = Object.assign({}, getPagination(1, textPages), opts)
 
   longText = text.replace("@longread", "")
 
@@ -89,7 +95,7 @@ bot.on("message", msg => {
       .toLowerCase()
       .includes(longread)
   ) {
-    textPages>1 ? bot.sendMessage(msg.chat.id, getText(longText, 1), getPagination(1, textPages)) : bot.sendMessage(msg.chat.id, longText)
+    textPages>1 ? bot.sendMessage(msg.chat.id, getText(longText, 1), extOpts) : bot.sendMessage(msg.chat.id, longText, opts)
   }
 })
 
