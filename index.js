@@ -102,7 +102,7 @@ bot.on("message", msg => {
 bot.on('callback_query', message => {
   let msg = message.message
   let text = longText
-  let editOptions = Object.assign({}, getPagination(parseInt(message.data), getMaxPage(text)), { chat_id: msg.chat.id, message_id: msg.message_id})
+  let editOptions = Object.assign({}, getPagination(parseInt(message.data), getMaxPage(text)), { chat_id: msg.chat.id, message_id: msg.message_id}, opts)
   bot.editMessageText(getText(text, message.data), editOptions)
 })
 
