@@ -46,7 +46,7 @@ express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 bot.on("message", msg => {
-  bot.sendMessage(msg.chat.id, 'I am alive on Heroku!')
+  //bot.sendMessage(msg.chat.id, 'I am alive on Heroku!')
 
   let Hi = "hi";
   if (
@@ -71,7 +71,7 @@ bot.on("message", msg => {
 
 let textPages = getMaxPage(file)
 
-bot.onText(/book/, function(msg) {
+bot.onText(/\/book/, function(msg) {
   bot.sendMessage(msg.chat.id, getText(file, 1), getPagination(1, textPages))
 })
 

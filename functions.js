@@ -28,16 +28,23 @@ const getText = function(text, page) {
 }
 
 function getPagination( current, maxpage ) {
-  let keys = []
-  if (current>1) keys.push({ text: `« 1`, callback_data: '1' })
-  if (current>2) keys.push({ text: `‹ ${current-1}`, callback_data: (current-1).toString() })
-  keys.push({ text: `· ${current} ·`, callback_data: current.toString() })
-  if (current<maxpage-1) keys.push({ text: `${current+1} ›`, callback_data: (current+1).toString() })
-  if (current<maxpage) keys.push({ text: `${maxpage} »`, callback_data: maxpage.toString() })
+  let keysTop = []
+  let keysBottom = []
+
+  if (maxpage>3) 
+    keysBottom.push({ text: `⏪ 1`, callback_data: '1' })
+    keysBottom.push({ text: `· ${current} ·`, callback_data: current.toString() })
+    keysBottom.push({ text: `${maxpage} ⏩`, callback_data: maxpage.toString() })
+
+  if (current>1) 
+    keysTop.push({ text: `◀`, callback_data: (current-1).toString() })  
+
+  if (current<maxpage-1)
+    keysTop.push({ text: `▶`, callback_data: (current+1).toString() })  
 
   return {
     reply_markup: JSON.stringify({
-      inline_keyboard: [ keys ]
+      inline_keyboard: [ keysTop, keysBottom ]
     })
   }
 }
