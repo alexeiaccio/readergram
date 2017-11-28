@@ -40,7 +40,7 @@ function getPagination( current, maxpage ) {
   if (current>1) 
     keysTop.push({ text: `◀`, callback_data: (current-1).toString() })  
 
-  if (current<maxpage-1)
+  if (current<maxpage)
     keysTop.push({ text: `▶`, callback_data: (current+1).toString() })  
 
   return {
