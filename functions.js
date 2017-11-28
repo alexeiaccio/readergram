@@ -31,10 +31,11 @@ function getPagination( current, maxpage ) {
   let keysTop = []
   let keysBottom = []
 
-  if (maxpage>3) 
+  if (maxpage>3) {
     keysBottom.push({ text: `⏪ 1`, callback_data: '1' })
     keysBottom.push({ text: `· ${current} ·`, callback_data: current.toString() })
     keysBottom.push({ text: `${maxpage} ⏩`, callback_data: maxpage.toString() })
+  }
 
   if (current>1) 
     keysTop.push({ text: `◀`, callback_data: (current-1).toString() })  

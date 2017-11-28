@@ -1,8 +1,8 @@
 const TelegramBot = require("node-telegram-bot-api")
 const express = require('express')
 const bodyParser = require('body-parser')
-const fs = require('fs')
-const path = require('path')
+/* const fs = require('fs')
+const path = require('path') */
 
 const {
   getText, 
@@ -10,9 +10,9 @@ const {
   getMaxPage
   } = require('./functions')
 
-const file = fs.readFileSync(path.resolve(__dirname + "/assets/text.js"), {
+/* const file = fs.readFileSync(path.resolve(__dirname + "/assets/text.js"), {
   encoding: "utf-8"
-})
+}) */
 
 const PORT = process.env.PORT || 5000
 const TOKEN = process.env.TELEGRAM_TOKEN
@@ -69,14 +69,39 @@ bot.on("message", msg => {
   }
 })
 
-let textPages = getMaxPage(file)
+/* let textPages = getMaxPage(file)
 
 bot.onText(/\/book/, function(msg) {
   bot.sendMessage(msg.chat.id, getText(file, 1), getPagination(1, textPages))
+}) */
+
+let longText = '';
+
+bot.on("message", msg => {
+  let longread = "@longread" 
+  let text = msg.text.toString() 
+  let textPages = getMaxPage(text)
+
+  longText = text.replace("@longread", "")
+
+  if (
+    text
+      .toLowerCase()
+      .includes(longread)
+  ) {
+    textPages>1 ? bot.sendMessage(msg.chat.id, getText(longText, 1), getPagination(1, textPages)) : bot.sendMessage(msg.chat.id, longText)
+  }
 })
 
-bot.on('callback_query', function (message) {
+bot.on('callback_query', message => {
+  let msg = message.message
+  let text = longText
+  let editOptions = Object.assign({}, getPagination(parseInt(message.data), getMaxPage(text)), { chat_id: msg.chat.id, message_id: msg.message_id})
+  bot.editMessageText(getText(text, message.data), editOptions)
+})
+
+/* bot.on('callback_query', function (message) {
   let msg = message.message;
   let editOptions = Object.assign({}, getPagination(parseInt(message.data), textPages), { chat_id: msg.chat.id, message_id: msg.message_id});
   bot.editMessageText(getText(file, message.data), editOptions)
-});
+}) */
