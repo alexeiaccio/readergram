@@ -75,7 +75,7 @@ bot.onText(/\/book/, function(msg) {
   bot.sendMessage(msg.chat.id, getText(file, 1), getPagination(1, textPages))
 }) */
 
-let longText = '';
+const longTexts = [];
 
 const opts = {
   parse_mode: 'markdown',
@@ -88,7 +88,15 @@ bot.on("message", msg => {
   let textPages = getMaxPage(text)
   let extOpts = Object.assign({}, getPagination(1, textPages), opts)
 
-  longText = text.replace("@longread", "")
+  let longText = text.replace("@longread", "") 
+
+  longTexts.push(
+    Object.assign({}, { 
+      chat_id: msg.chat.id, 
+      message_id: msg.message_id,
+      text: longText
+    }) 
+  )
 
   if (
     text
@@ -101,8 +109,18 @@ bot.on("message", msg => {
 
 bot.on('callback_query', message => {
   let msg = message.message
-  let text = longText
+  let chat_id = msg.chat.id
+  let message_id = msg.message_id
+
+  let index = longTexts.findIndex((chat_id,
+    message_id) => (chat_id === chat_id && message_id === message_id))
+
+  console.log(index, longTexts.length)
+
+  let text = longTexts[index].text
+
   let editOptions = Object.assign({}, getPagination(parseInt(message.data), getMaxPage(text)), { chat_id: msg.chat.id, message_id: msg.message_id}, opts)
+
   bot.editMessageText(getText(text, message.data), editOptions)
 })
 
@@ -111,3 +129,5 @@ bot.on('callback_query', message => {
   let editOptions = Object.assign({}, getPagination(parseInt(message.data), textPages), { chat_id: msg.chat.id, message_id: msg.message_id});
   bot.editMessageText(getText(file, message.data), editOptions)
 }) */
+
+console.log(longTexts)
