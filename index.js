@@ -83,12 +83,12 @@ const opts = {
 }
 
 bot.on("message", msg => {
-  let longread = "@longread" 
+  let longread = "/longread" 
   let text = msg.text.toString() 
   let textPages = getMaxPage(text)
   let extOpts = Object.assign({}, getPagination(1, textPages), opts)
 
-  let longText = text.replace("@longread", "") 
+  let longText = text.replace(longread, "") 
 
   longTexts.push(
     Object.assign({}, { 
@@ -120,11 +120,3 @@ bot.on('callback_query', message => {
 
   bot.editMessageText(getText(text, message.data), editOptions)
 })
-
-/* bot.on('callback_query', function (message) {
-  let msg = message.message;
-  let editOptions = Object.assign({}, getPagination(parseInt(message.data), textPages), { chat_id: msg.chat.id, message_id: msg.message_id});
-  bot.editMessageText(getText(file, message.data), editOptions)
-}) */
-
-console.log(longTexts)
