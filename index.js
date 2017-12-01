@@ -93,7 +93,7 @@ bot.on("message", msg => {
   longTexts.push(
     Object.assign({}, { 
       chat_id: msg.chat.id, 
-      message_id: msg.message_id,
+      message_id: parseInt(msg.message_id) + 1,
       text: longText
     }) 
   )
@@ -109,15 +109,15 @@ bot.on("message", msg => {
 
 bot.on('callback_query', message => {
   let msg = message.message
-  let chat_id = msg.chat.id
-  let message_id = msg.message_id
+  let chat_id = null
+  let message_id = null  
+  let index = null
+  
+  chat_id = msg.chat.id
+  message_id = msg.message_id
+  index = longTexts.filter(longText => (longText.chat_id === msg.chat.id && longText.message_id === message_id))
 
-  let index = longTexts.findIndex((chat_id,
-    message_id) => (chat_id === chat_id && message_id === message_id))
-
-  console.log(index, longTexts.length)
-
-  let text = longTexts[index].text
+  let text = index[0].text
 
   let editOptions = Object.assign({}, getPagination(parseInt(message.data), getMaxPage(text)), { chat_id: msg.chat.id, message_id: msg.message_id}, opts)
 
