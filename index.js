@@ -109,15 +109,12 @@ bot.on("message", msg => {
 
 bot.on('callback_query', message => {
   let msg = message.message
-  let chat_id = null
-  let message_id = null  
-  let index = null
+  let chat_id = msg.chat.id
+  let message_id = msg.message_id 
   
-  chat_id = msg.chat.id
-  message_id = msg.message_id
-  index = longTexts.filter(longText => (longText.chat_id === msg.chat.id && longText.message_id === message_id))
+  let msgText = longTexts.filter(longText => (longText.chat_id === msg.chat.id && longText.message_id === message_id))
 
-  let text = index[0].text
+  let text = msgText[0].text
 
   let editOptions = Object.assign({}, getPagination(parseInt(message.data), getMaxPage(text)), { chat_id: msg.chat.id, message_id: msg.message_id}, opts)
 
